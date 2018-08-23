@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,20 +23,23 @@ import java.util.Date;
 
 public class MainActivity extends Activity {
     Button bt_TakePhoto;
+    Button bt_Finalizar;
     ImageView imageView;
+    EditText edtCodContainer;
     static public final String LOG_TAG = MainActivity.class.getSimpleName();
     static String mCurrentPhotoPath = "";
     static final int REQUEST_TAKE_PHOTO = 1;
     private static final String AUTHORITY = BuildConfig.APPLICATION_ID+".fileprovider";
-    String albumName = "abb";
+    String albumName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt_TakePhoto = findViewById(R.id.btTakePhoto);
+        bt_TakePhoto = findViewById(R.id.bt_Fotografar);
+        bt_Finalizar=findViewById(R.id.bt_finalizar);
         imageView = findViewById(R.id.ivPhoto);
-        dispatchTakePictureIntent();
+        edtCodContainer=findViewById(R.id.edtCodContainer);
 
     }
     public File getAlbumStorageDir(String albumName) {
@@ -47,14 +52,20 @@ public class MainActivity extends Activity {
         }
         return file;
     }//end getAlbumStorageDir
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getAlbumStorageDir(albumName);
-        File image = File.createTempFile(imageFileName, ".jpg", storageDir);
-        mCurrentPhotoPath = image.getAbsolutePath();
 
-        return image;
+    private File createImageFile() throws IOException {
+        albumName = edtCodContainer.getText().toString();
+        if (!albumName.equals("")){
+            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+            String imageFileName = albumName+"_" + timeStamp + "_";
+            File storageDir = getAlbumStorageDir(albumName);
+            File image = File.createTempFile(imageFileName, ".jpg", storageDir);
+            mCurrentPhotoPath = image.getAbsolutePath();
+            return image;
+        }else {
+            Toast.makeText(MainActivity.this,"Necessário Preencher campo Código do Container !",Toast.LENGTH_LONG).show();
+        }
+        return null;
     }
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -73,5 +84,10 @@ public class MainActivity extends Activity {
             }
         }
     }//enddispatchTakePictureIntent
+
+    public void btnFotogrfar(View view) {
+        dispatchTakePictureIntent();
+    }
+
 }//end
 

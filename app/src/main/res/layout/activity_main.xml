@@ -23,7 +23,7 @@
             android:src="@drawable/ttw" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/edtCodContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -34,13 +34,14 @@
     </FrameLayout>
 
     <Button
-        android:id="@+id/btTakePhoto"
+        android:id="@+id/bt_Fotografar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:contentDescription="@string/app_name"
-        android:text="Take a Foto" />
+        android:onClick="btnFotogrfar"
+        android:contentDescription="@string/descrever"
+        android:text="@string/bt_Fotografar" />
 
     <Button
         android:id="@+id/bt_finalizar"
