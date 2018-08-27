@@ -1,7 +1,10 @@
 package com.android.ttwscreen_v21;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
@@ -31,7 +34,7 @@ public class MainActivity extends Activity {
     static final int REQUEST_TAKE_PHOTO = 1;
     private static final String AUTHORITY = BuildConfig.APPLICATION_ID+".fileprovider";
     String albumName;
-
+    private Dialog alerta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +91,28 @@ public class MainActivity extends Activity {
     public void btnFotogrfar(View view) {
         dispatchTakePictureIntent();
     }
-
+    public void btnFinalizar(View view){
+        setAlerta();
+    }
+    private void setAlerta(){
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        builder.setTitle("Container: "+albumName);
+        builder.setMessage("Deseja Finalizar? ");
+        builder.setPositiveButton("Confirmar ", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this,"confirmar="+which, Toast.LENGTH_SHORT).show();
+                edtCodContainer.getText().clear();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this,"cancelar=" + which, Toast.LENGTH_SHORT).show();
+            }
+        });
+        alerta=builder.create();
+        alerta.show();
+    }
 }//end
 
