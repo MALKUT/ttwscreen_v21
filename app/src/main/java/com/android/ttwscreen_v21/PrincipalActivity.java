@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class PrincipalActivity extends Activity implements AdapterView.OnItemSelectedListener {
+public class PrincipalActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     Spinner spinner;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class PrincipalActivity extends Activity implements AdapterView.OnItemSel
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        
+
     }
 
     @Override
