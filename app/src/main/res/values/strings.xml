@@ -3,4 +3,14 @@
     <string name="bt_Fotografar">Fotografar</string>
     <string name="bt_Finalizar">Finalizar</string>
     <string name="descrever">Ativar Câmera</string>
+    <string-array name="patio">
+        <item>Patio 1</item>
+        <item>Patio 2</item>
+        <item>Patio 3</item>
+        <item>Patio 4</item>
+        <item>Patio 5</item>
+        <item>Patio 6</item>
+        <item>Patio 7</item>
+        <item>Patio 8</item>
+    </string-array>
 </resources>
