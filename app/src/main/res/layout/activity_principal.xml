@@ -13,6 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
+        android:contentDescription="@string/Fotografar"
         android:src="@drawable/ttw">
 
     </ImageView>

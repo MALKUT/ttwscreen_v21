@@ -18,7 +18,7 @@ public class PrincipalActivity extends AppCompatActivity implements AdapterView.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        button = findViewById(R.id.bt_Fotografar);
+        button = findViewById(R.id.btFotografar);
         spinner = findViewById(R.id.spinPatio);
         ArrayAdapter<CharSequence> adapter= ArrayAdapter.createFromResource(this,R.array.patio, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item);

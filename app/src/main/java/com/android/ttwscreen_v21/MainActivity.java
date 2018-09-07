@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        bt_TakePhoto = findViewById(R.id.bt_Fotografar);
+        bt_TakePhoto = findViewById(R.id.btFotografar);
         bt_Finalizar=findViewById(R.id.btfinalizar);
         imageView = findViewById(R.id.ivPhoto);
         edtCodContainer=findViewById(R.id.edtCodContainer);
@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
         if (!file.mkdirs()) {
             Log.e(LOG_TAG, "Diretorio nao criado");
 
-        } else {
-
         }
         return file;
     }//end getAlbumStorageDir
@@ -71,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private File createImageFile() throws IOException {
         albumName = edtCodContainer.getText().toString();
-        if (!albumName.equals("")&& !verificaContainer()==false){
+        if (!albumName.equals("")&& !!verificaContainer()){
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
             String imageFileName = albumName+"_" + timeStamp + "_";
             File storageDir = getAlbumStorageDir(albumName);
