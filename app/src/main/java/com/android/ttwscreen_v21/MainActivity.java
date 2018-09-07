@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
     private File createImageFile() throws IOException {
         albumName = edtCodContainer.getText().toString();
-        if (!albumName.equals("")&& !!verificaContainer()){
+        if (!albumName.equals("")&& !verificaContainer()){
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
             String imageFileName = albumName+"_" + timeStamp + "_";
             File storageDir = getAlbumStorageDir(albumName);
