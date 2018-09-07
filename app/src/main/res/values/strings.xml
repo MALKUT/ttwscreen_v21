@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">ttwscreen_v2.1</string>
-    <string name="bt_Fotografar">Fotografar</string>
-    <string name="bt_Finalizar">Finalizar</string>
+    <string name="avancar">Avançar</string>
+    <string name="Patio">Patio</string>
+    <string name="Fotografar">Fotografar</string>
+    <string name="Finalizar">Finalizar</string>
     <string name="descrever">Ativar Câmera</string>
     <string-array name="patio">
         <item>Patio 1</item>

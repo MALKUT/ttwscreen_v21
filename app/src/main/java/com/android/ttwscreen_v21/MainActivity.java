@@ -1,22 +1,21 @@
 package com.android.ttwscreen_v21;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -24,15 +23,19 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
+    Helper helper;
+    CdContainer container= new CdContainer();
     Button bt_TakePhoto;
     Button bt_Finalizar;
     ImageView imageView;
     EditText edtCodContainer;
+    TextView tvPatio;
     static public final String LOG_TAG = MainActivity.class.getSimpleName();
     static String mCurrentPhotoPath = "";
     static final int REQUEST_TAKE_PHOTO = 1;
     private static final String AUTHORITY = BuildConfig.APPLICATION_ID+".fileprovider";
+
     String albumName;
     private Dialog alerta;
     @Override
@@ -40,9 +43,14 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bt_TakePhoto = findViewById(R.id.bt_Fotografar);
-        bt_Finalizar=findViewById(R.id.bt_finalizar);
+        bt_Finalizar=findViewById(R.id.btfinalizar);
         imageView = findViewById(R.id.ivPhoto);
         edtCodContainer=findViewById(R.id.edtCodContainer);
+        tvPatio = findViewById(R.id.tvPatio);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(PrincipalActivity.LOG_TAG);
+        tvPatio.setText(message);
 
     }
     public File getAlbumStorageDir(String albumName) {
@@ -55,10 +63,15 @@ public class MainActivity extends Activity {
         }
         return file;
     }//end getAlbumStorageDir
-
+    public void btnFotogrfar(View view) {
+        dispatchTakePictureIntent();
+    }
+    public void btnFinalizar(View view){
+        setAlerta();
+    }
     private File createImageFile() throws IOException {
         albumName = edtCodContainer.getText().toString();
-        if (!albumName.equals("")){
+        if (!albumName.equals("")&& !verificaContainer()==false){
             String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
             String imageFileName = albumName+"_" + timeStamp + "_";
             File storageDir = getAlbumStorageDir(albumName);
@@ -66,7 +79,7 @@ public class MainActivity extends Activity {
             mCurrentPhotoPath = image.getAbsolutePath();
             return image;
         }else {
-            Toast.makeText(MainActivity.this,"Necessário Preencher campo Código do Container !",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,"Necessário Preencher campo Código do Container ou Número Container Errado !",Toast.LENGTH_LONG).show();
         }
         return null;
     }
@@ -88,12 +101,7 @@ public class MainActivity extends Activity {
         }
     }//enddispatchTakePictureIntent
 
-    public void btnFotogrfar(View view) {
-        dispatchTakePictureIntent();
-    }
-    public void btnFinalizar(View view){
-        setAlerta();
-    }
+
     private void setAlerta(){
         AlertDialog.Builder builder= new AlertDialog.Builder(this);
         builder.setTitle("Container: "+albumName);
@@ -113,6 +121,10 @@ public class MainActivity extends Activity {
         });
         alerta=builder.create();
         alerta.show();
+    }
+    public Boolean verificaContainer(){
+
+        return container.isContainerNumberValid(albumName);
     }
 }//end
 

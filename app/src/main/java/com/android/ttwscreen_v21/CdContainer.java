@@ -1,6 +1,6 @@
 package com.android.ttwscreen_v21;
 public class CdContainer {
-    public static boolean isContainerNumberValid(String pCid){
+    public boolean isContainerNumberValid(String pCid){
         if(pCid == null || pCid.length() != 11){
             return false;
         }

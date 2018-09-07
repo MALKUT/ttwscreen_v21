@@ -26,4 +26,14 @@
         android:textSize="50sp" />
 
 
+    <Button
+        android:id="@+id/btAvancar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/spinPatio"
+        android:layout_alignParentStart="true"
+        android:onClick="avancar"
+        android:text="@string/avancar" />
+
+
 </RelativeLayout>

@@ -31,20 +31,20 @@
         android:layout_marginBottom="79dp"
         android:ems="10"
         android:inputType="textCapCharacters"
-        android:text="Sollllllll" />
+        android:text="" />
 
     <Button
-        android:id="@+id/bt_Fotografar"
+        android:id="@+id/btFotografar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:onClick="btnFotogrfar"
         android:contentDescription="@string/descrever"
-        android:text="@string/bt_Fotografar" />
+        android:text="@string/Fotografar" />
 
     <Button
-        android:id="@+id/bt_finalizar"
+        android:id="@+id/btfinalizar"
         android:layout_width="114dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:text="Patio" />
+        android:text="@string/Patio" />
 
     <TextView
         android:id="@+id/tvPatio"
@@ -67,6 +67,6 @@
         android:layout_height="36dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:text="Patio" />
+        android:text="" />
 
 </RelativeLayout>
