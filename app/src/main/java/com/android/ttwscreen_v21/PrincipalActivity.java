@@ -1,4 +1,5 @@
 package com.android.ttwscreen_v21;
+import com.android.ttwscreen_v21.Helper.Helper;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,12 +8,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+
 public class PrincipalActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    String item;
+    Helper helper= new Helper();
+   private String idContainer;
     Spinner spinner;
     Button button;
     static public final String LOG_TAG = MainActivity.class.getSimpleName();
-    Helper helper = new Helper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,12 +30,14 @@ public class PrincipalActivity extends AppCompatActivity implements AdapterView.
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        item = parent.getItemAtPosition(position).toString();
-
-        //helper.setIdPatio(item);
-        //mostrar item selecionado spinner
-        //Toast.makeText(parent.getContext(),"Selecionado: "+ item, Toast.LENGTH_LONG).show();
+        /**
+         * Recebe o o valor selecionado do spinner
+         */
+        idContainer = parent.getItemAtPosition(position).toString();
+        /**
+         * Envia o valor recebido na variável "item" para a classe Helper
+         */
+        helper.idPatio=idContainer;
     }
 
     @Override
@@ -43,8 +47,7 @@ public class PrincipalActivity extends AppCompatActivity implements AdapterView.
 
     public void avancar(View view) {
         Intent intent = new Intent(PrincipalActivity.this,MainActivity.class);
-        intent.putExtra(LOG_TAG,item);
-
+        intent.putExtra(LOG_TAG,idContainer);
         startActivity(intent);
     }
 }

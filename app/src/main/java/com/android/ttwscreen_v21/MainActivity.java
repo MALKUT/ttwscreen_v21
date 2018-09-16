@@ -1,14 +1,19 @@
 package com.android.ttwscreen_v21;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,14 +23,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.ttwscreen_v21.Helper.Helper;
+import com.android.ttwscreen_v21.CdContainer;
+import com.android.ttwscreen_v21.Container.CodContainer;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    Helper helper;
-    CdContainer container= new CdContainer();
+    Helper helper = new Helper();
+    CodContainer codContainer=new CodContainer();
+
     Button bt_TakePhoto;
     Button bt_Finalizar;
     ImageView imageView;
@@ -35,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     static String mCurrentPhotoPath = "";
     static final int REQUEST_TAKE_PHOTO = 1;
     private static final String AUTHORITY = BuildConfig.APPLICATION_ID+".fileprovider";
-
+    private String idContainer;
     String albumName;
     private Dialog alerta;
     @Override
@@ -47,37 +57,52 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.ivPhoto);
         edtCodContainer=findViewById(R.id.edtCodContainer);
         tvPatio = findViewById(R.id.tvPatio);
+        startBasic();
 
+    }
+    private void startBasic (){
         Intent intent = getIntent();
         String message = intent.getStringExtra(PrincipalActivity.LOG_TAG);
         tvPatio.setText(message);
 
     }
+
     public File getAlbumStorageDir(String albumName) {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName);
         if (!file.mkdirs()) {
             Log.e(LOG_TAG, "Diretorio nao criado");
-
         }
         return file;
     }//end getAlbumStorageDir
     public void btnFotogrfar(View view) {
-        dispatchTakePictureIntent();
+        idContainer = edtCodContainer.getText().toString();
+        if (!idContainer.equals("")){
+            dispatchTakePictureIntent();
+        }else {
+            //msg"para o usuario"
+            Toast.makeText(MainActivity.this,helper.PreenCampo,Toast.LENGTH_LONG).show();
+            //identifica o campo zavio
+            edtCodContainer.setBackground(helper.shapeDrawable());
+        }
+
     }
     public void btnFinalizar(View view){
         setAlerta();
     }
     private File createImageFile() throws IOException {
-        albumName = edtCodContainer.getText().toString();
-        if (!albumName.equals("")&& !verificaContainer()){
-            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss").format(new Date());
+
+        albumName = helper.idContainer;
+
+        if (verificaContainer()){
+            String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmmss",Locale.getDefault()).format(new Date());
             String imageFileName = albumName+"_" + timeStamp + "_";
             File storageDir = getAlbumStorageDir(albumName);
             File image = File.createTempFile(imageFileName, ".jpg", storageDir);
             mCurrentPhotoPath = image.getAbsolutePath();
             return image;
         }else {
-            Toast.makeText(MainActivity.this,"Necessário Preencher campo Código do Container ou Número Container Errado !",Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this,helper.CamVazio,Toast.LENGTH_LONG).show();
+            edtCodContainer.setBackground(helper.shapeDrawable());
         }
         return null;
     }
@@ -121,8 +146,8 @@ public class MainActivity extends AppCompatActivity {
         alerta.show();
     }
     public Boolean verificaContainer(){
-
-        return container.isContainerNumberValid(albumName);
+        // idcontainer = albumname
+        return codContainer.isContainerNumberValid (this,helper.idContainer);
     }
 }//end
 
