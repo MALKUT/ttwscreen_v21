@@ -3,12 +3,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
-import android.graphics.drawable.shapes.Shape;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -23,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.ttwscreen_v21.Helper.Helper;
-import com.android.ttwscreen_v21.CdContainer;
 import com.android.ttwscreen_v21.Container.CodContainer;
+import com.android.ttwscreen_v21.Helper.Helper;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -57,15 +51,11 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.ivPhoto);
         edtCodContainer=findViewById(R.id.edtCodContainer);
         tvPatio = findViewById(R.id.tvPatio);
-        startBasic();
-
-    }
-    private void startBasic (){
         Intent intent = getIntent();
         String message = intent.getStringExtra(PrincipalActivity.LOG_TAG);
         tvPatio.setText(message);
-
     }
+
 
     public File getAlbumStorageDir(String albumName) {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), albumName);
@@ -75,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         return file;
     }//end getAlbumStorageDir
     public void btnFotogrfar(View view) {
-        idContainer = edtCodContainer.getText().toString();
-        if (!idContainer.equals("")){
+        helper.idContainer = edtCodContainer.getText().toString();
+        if (!helper.idContainer.equals("")){
             dispatchTakePictureIntent();
         }else {
             //msg"para o usuario"
@@ -132,8 +122,8 @@ public class MainActivity extends AppCompatActivity {
         builder.setPositiveButton("Confirmar ", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(MainActivity.this,"confirmar="+which, Toast.LENGTH_SHORT).show();
-                edtCodContainer.getText().clear();
+            Toast.makeText(MainActivity.this,"confirmar="+which, Toast.LENGTH_SHORT).show();
+            edtCodContainer.getText().clear();
             }
         });
         builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -146,8 +136,9 @@ public class MainActivity extends AppCompatActivity {
         alerta.show();
     }
     public Boolean verificaContainer(){
-        // idcontainer = albumname
-        return codContainer.isContainerNumberValid (this,helper.idContainer);
+        //idcontainer = albumname
+        helper.idContainer=helper.idContainer.replaceAll("\\s","");
+        return codContainer.isContainerNumberValid (helper.idContainer);
     }
 }//end
 

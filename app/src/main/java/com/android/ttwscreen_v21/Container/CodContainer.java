@@ -1,16 +1,22 @@
 package com.android.ttwscreen_v21.Container;
 
-import android.content.Context;
-import android.util.Log;
+
 
 
 import com.android.ttwscreen_v21.MainActivity;
 
-public class CodContainer {
+
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
+
+
+@RunWith(JUnit4.class)
+public class CodContainer{
     private String LOG_TAG;
     public Boolean status;
-
-    public boolean isContainerNumberValid(Context context, String pCid){
+    @Test
+    public boolean isContainerNumberValid(String pCid){
 
         if(pCid == null || pCid.length() != 11){
 
